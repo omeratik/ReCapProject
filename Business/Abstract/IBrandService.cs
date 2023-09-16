@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Utilities.Results;
 
 namespace Business.Abstract
 {
 	public interface IBrandService
 	{
-		List<Brand> GetAll();
-		Brand GetById(int brandId);
+		IDataResult<List<Brand>> GetAll();
+		IDataResult<Brand>  GetById(int brandId);
 	}
 }

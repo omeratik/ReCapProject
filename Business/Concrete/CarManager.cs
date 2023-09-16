@@ -1,13 +1,9 @@
 ﻿using Business.Abstract;
+using Business.Constance;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
-using DataAccess.Concrete;
 using Entities.Concrete;
 using Entities.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
@@ -20,24 +16,47 @@ namespace Business.Concrete
 			_carDal = cardal;
 		}
 
-		public List<Car> GetAll()
+		public Result Add(Car car)
 		{
-			return	_carDal.GetAll();
+			if (car.CarName.Length<3)
+			{
+				return new ErrorResult(Messages.VehicleInvalid);
+
+			}
+			_carDal.Add(car);
+			return new SuccessResult(Messages.VehicleAdd);
+
 		}
 
-		public List<Car> GetByAllBrandId(int id)
+
+		public IDataResult<List<Car>> GetAll()
 		{
-			return _carDal.GetAll(c => c.BrandId == id && c.DailyPrice > 0 && c.Description.Length > 2);
+			if (DateTime.Now.Hour==22)
+			{
+				return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
+			}
+
+			return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.VehicleListed);
 		}
 
-		public List<Car> GetByColorName(int id)
+		public IDataResult<List<Car>> GetByAllBrandId(int id)
 		{
-			return _carDal.GetAll(c => c.ColorId == id);
+			return new SuccessDataResult<List<Car>> (_carDal.GetAll(c => c.BrandId == id && c.DailyPrice > 0 && c.Description.Length > 2));
 		}
 
-		public List<CarDetailDto> GetCarDetails()
+		public IDataResult<List<Car>> GetByColorName(int id)
 		{
-			return _carDal.GetCarDetails();
+			return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == id));
+		}
+
+		public IDataResult<List<CarDetailDto>> GetCarDetails()
+		{
+			return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
+		}
+
+		public Result Update(Car car)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
