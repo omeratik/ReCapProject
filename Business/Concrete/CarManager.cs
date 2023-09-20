@@ -28,6 +28,11 @@ namespace Business.Concrete
 
 		}
 
+		public Result Delete(Car car)
+		{
+			_carDal.Delete(car);
+			return new SuccessResult(Messages.Null);
+		}
 
 		public IDataResult<List<Car>> GetAll()
 		{
@@ -47,6 +52,11 @@ namespace Business.Concrete
 		public IDataResult<List<Car>> GetByColorName(int id)
 		{
 			return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == id));
+		}
+
+		public IDataResult<Car> GetById(int carId)
+		{
+			return new SuccessDataResult<Car>(_carDal.Get(c=> c.CarId== carId));
 		}
 
 		public IDataResult<List<CarDetailDto>> GetCarDetails()

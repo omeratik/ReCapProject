@@ -1,4 +1,5 @@
 ﻿using Business.Concrete;
+using Business.Constance;
 using Core.DataAccesss.EntityFramework;
 using DataAccess.Abstract;
 using DataAccess.Concrete;
@@ -15,12 +16,21 @@ namespace ConsoleUI
 			//CarTest();
 
 			//GeneralTest();
-			
-			
-
+			//CustomerTest();
+			RentalManager rentalManager = new RentalManager(new EfRentalDal());
+			var rental1 = new Rental { CarId = 1,RentDate = DateTime.Now};
+			var result = rentalManager.Add(rental1);
+			Console.WriteLine(result.Message);
 
 		}
 
+		private static void CustomerTest()
+		{
+			CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+			Customer customer = new Customer { CustomerId = 1, UserId = 1, CompanyName = "Atik Holding" };
+			var result = customerManager.Add(customer);
+			Console.WriteLine(result.Message);
+		}
 
 
 		private static void CarTest()
