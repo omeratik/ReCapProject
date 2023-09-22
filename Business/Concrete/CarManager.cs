@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constance;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -16,13 +18,10 @@ namespace Business.Concrete
 			_carDal = cardal;
 		}
 
+		[ValidatorAspect(typeof(CarValidator))]
 		public Result Add(Car car)
 		{
-			if (car.CarName.Length<3)
-			{
-				return new ErrorResult(Messages.VehicleInvalid);
-
-			}
+			
 			_carDal.Add(car);
 			return new SuccessResult(Messages.VehicleAdd);
 
