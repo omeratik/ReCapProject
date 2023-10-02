@@ -6,11 +6,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using Core.Entities;
+using Core.Entities.Abstract;
 
 namespace Core.DataAccesss.EntityFramework
 {
-	public class EfEntityRepositoryBase<TEntity, TContext> : IEntityRespository<TEntity>
+    public class EfEntityRepositoryBase<TEntity, TContext> : IEntityRespository<TEntity>
 		where TEntity : class,IEntity,new()
 		where TContext : DbContext,new()
 	{

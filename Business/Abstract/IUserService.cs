@@ -1,11 +1,13 @@
-﻿using Core.Utilities.Results;
-using Entities.Concrete;
+﻿using Core.Entities.Concrete;
+using Core.Utilities.Results;
 
-namespace Business.Abstract;
+namespace Business.Abstract
 
-public interface IUserService
 {
-	IResult Add(User user);
-	IResult Delete(User user);
-	IResult Update(User user);
+	public interface IUserService
+	{
+		List<OperationClaim> GetClaims(User user);
+		void Add(User user);
+		User GetByMail(string email);
+	}
 }

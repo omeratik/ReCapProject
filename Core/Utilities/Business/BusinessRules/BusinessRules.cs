@@ -17,8 +17,8 @@ namespace Core.Utilities.Business.BusinessRules
 				{
 					return logic;
 				}
-			}
 
+			}
 			return null;
 		}
 	}

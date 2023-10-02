@@ -17,7 +17,7 @@ namespace WebAPI.Controllers
 		}
 
 		[HttpGet("getall")]
-		public IActionResult Get()
+		public IActionResult GetAll()
 		{
 			var result = _carService.GetAll();
 			if (result.Success)
@@ -28,7 +28,7 @@ namespace WebAPI.Controllers
 		}
 
 		[HttpGet("getbyid")]
-		public IActionResult Get(int id)
+		public IActionResult GetById(int id)
 		{
 			var result = _carService.GetById(id);
 			if (result.Success)

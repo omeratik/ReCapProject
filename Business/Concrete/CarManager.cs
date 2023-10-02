@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constance;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Validation;
@@ -33,9 +34,10 @@ namespace Business.Concrete
 			return new SuccessResult(Messages.Null);
 		}
 
+		[SecuredOperation("Car.List,user")]
 		public IDataResult<List<Car>> GetAll()
 		{
-			if (DateTime.Now.Hour==22)
+			if (DateTime.Now.Hour==13)
 			{
 				return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
 			}
