@@ -2,7 +2,10 @@
 using Business.BusinessAspects.Autofac;
 using Business.Constance;
 using Business.ValidationRules.FluentValidation;
-using Core.Aspects.Validation;
+using Core.Aspects.Autofac;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Transaction;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -20,12 +23,20 @@ namespace Business.Concrete
 		}
 
 		[ValidatorAspect(typeof(CarValidator))]
+		[CacheRemoveAspect("ICarService.Get")]
 		public Result Add(Car car)
 		{
 			
 			_carDal.Add(car);
 			return new SuccessResult(Messages.VehicleAdd);
 
+		}
+		[TransactionScopeAspect]
+		public IResult AddTransactionalTest(Car car)
+		{
+			_carDal.Add(car);
+			_carDal.Update(car);
+			return new SuccessResult(Messages.CarUpdated);
 		}
 
 		public Result Delete(Car car)
@@ -35,6 +46,7 @@ namespace Business.Concrete
 		}
 
 		[SecuredOperation("Car.List,user")]
+		[CacheAspect()]
 		public IDataResult<List<Car>> GetAll()
 		{
 			if (DateTime.Now.Hour==13)

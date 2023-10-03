@@ -15,4 +15,5 @@ public class Messages
 	public static string UserAlreadyExists = "Kullanıcı zaten var.";
 	public static string AccessTokenCreated = "Token olusturuldu.";
 	public static string AuthorizationDenied="Yetkiniz yok";
+	public static string CarUpdated="Araba güncellendi";
 }
